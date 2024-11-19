@@ -1,15 +1,28 @@
-penpot.ui.open("Penpot plugin starter template", `?theme=${penpot.theme}`);
+penpot.ui.open("Meshy - Generate mesh gradients", `?theme=${penpot.theme}`, {
+  width: 350,
+  height: 400,
+});
 
-penpot.ui.onMessage<string>((message) => {
-  if (message === "create-text") {
-    const text = penpot.createText("Hello world!");
+penpot.ui.onMessage<{
+  type: string;
+  data: any;
+}>((message) => {
+  console.log(message);
+  if (message.type === "add-to-canvas") {
+    console.log("Adding to canvas");
+    console.log(message.data);
 
-    if (text) {
-      text.x = penpot.viewport.center.x;
-      text.y = penpot.viewport.center.y;
+    penpot.createShapeFromSvg(message.data);
 
-      penpot.selection = [text];
-    }
+    // penpot
+    //   .uploadMediaData("abc", new Uint8Array(message.data), "image/svg+xml")
+    //   .then((imageData) => {
+    //     console.log("success");
+    //   })
+    //   .catch((e) => {
+    //     console.log("Error: ", e);
+    //   });
+    // TODO: Logic here
   }
 });
 

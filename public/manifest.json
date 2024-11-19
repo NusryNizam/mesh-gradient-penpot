@@ -1,6 +1,6 @@
 {
-  "name": "Penpot starter plugin",
+  "name": "Meshy",
   "code": "plugin.js",
-  "description": "This is a starter plugin for Penpot",
+  "description": "Generate mesh gradients",
   "permissions": ["content:read", "content:write"]
 }

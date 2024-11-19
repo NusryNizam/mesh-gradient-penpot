@@ -12,3 +12,51 @@ body {
 p {
   margin-block-end: 0.75rem;
 }
+
+.app {
+  max-width: 300px;
+  margin: auto;
+  margin-top: var(--spacing-12);
+}
+
+#gradient-wrapper {
+  aspect-ratio: 1.5;
+  max-height: 200px;
+  margin-bottom: var(--spacing-12);
+  border-radius: var(--spacing-4);
+}
+
+[data-theme="dark"] #gradient-wrapper {
+  border: 1px solid var(--db-secondary);
+}
+
+[data-theme="light"] #gradient-wrapper {
+  border: 1px solid var(--lb-secondary);
+}
+
+[data-theme="dark"] input[type="range"] {
+  accent-color: var(--da-primary);
+}
+
+[data-theme="light"] input[type="range"] {
+  accent-color: var(--la-primary);
+}
+
+#stop-count {
+  font-weight: 500;
+}
+
+.full-length {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-12);
+}
+
+.row {
+  display: flex;
+  gap: var(--spacing-8);
+}
+
+.row button {
+  flex-grow: 1;
+}
