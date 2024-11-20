@@ -1,5 +1,5 @@
 import "./style.css";
-import { generateRandomizedGradientSvg } from "./util";
+import { generateRandomizedGradientSvg, updateFeBlendMode } from "./util";
 
 // get the current theme from the URL
 const searchParams = new URLSearchParams(window.location.search);
@@ -8,10 +8,14 @@ document.body.dataset.theme = searchParams.get("theme") ?? "light";
 const box = document.getElementById("gradient-wrapper") as HTMLDivElement;
 const stopCountInput = document.getElementById("stop-count") as HTMLDivElement;
 const stopInput = document.getElementById("stops") as HTMLElement;
+const blendModeInput = document.getElementById(
+  "blend-modes"
+) as HTMLSelectElement;
 
 stopCountInput.innerText = "3";
 stopInput.setAttribute("value", "3");
 let stopCount = 3;
+let blendMode = "normal";
 
 let gradient = generate();
 box.innerHTML = gradient;
@@ -22,6 +26,13 @@ stopInput.addEventListener("input", (e) => {
   stopCountInput.innerText = val;
 
   gradient = generate();
+  box.innerHTML = gradient;
+  console.log(gradient);
+});
+
+blendModeInput.addEventListener("change", (e) => {
+  blendMode = (e.target as HTMLInputElement).value;
+  gradient = updateFeBlendMode(gradient, blendMode);
   box.innerHTML = gradient;
 });
 
@@ -57,6 +68,6 @@ function generate() {
     Math.round(Math.random() * 360),
     1200,
     800,
-    "screen"
+    blendMode
   );
 }

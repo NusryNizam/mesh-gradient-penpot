@@ -21,7 +21,7 @@ export const generateRandomizedGradientSvg = (
   const generateColors = (length: number, hue: number): string[] => {
     return Array.from({ length }, (_, i) => {
       if (i === 0) {
-        return `hsl(${hue}, 100%, 74%)`;
+        return `hsl(${hue}, 100%, 50%)`;
       }
       if (i < length / 1.4) {
         return `hsl(${
@@ -85,9 +85,36 @@ export const generateRandomizedGradientSvg = (
     ${blendFilter}
     ${gradientDefs}
   </defs>
-  <rect x="0" y="0" width="100%" height="100%" fill="hsl(${
-    initialHue + 20
-  }, 100%, 100%)" />
+  <rect x="0" y="0" width="100%" height="100%" fill="hsl(${initialHue}, 100%, 100%)" />
   ${svgElements}
 </svg>`;
 };
+
+/**
+ * Updates the mode of the <feBlend> element in an SVG string.
+ *
+ * @param {string} svgString - The SVG string to modify.
+ * @param {string} newMode - The new blend mode to apply (e.g., "multiply", "screen").
+ * @returns {string} - The updated SVG string.
+ */
+export function updateFeBlendMode(svgString: string, newMode: string) {
+  // Create a parser to convert the SVG string to a DOM element
+  const parser = new DOMParser();
+  const serializer = new XMLSerializer();
+
+  // Parse the SVG string into a DOM object
+  const svgDoc = parser.parseFromString(svgString, "image/svg+xml");
+
+  // Find the <feBlend> element
+  const feBlend = svgDoc.querySelector("feBlend");
+
+  // Update the mode attribute if <feBlend> exists
+  if (feBlend) {
+    feBlend.setAttribute("mode", newMode);
+  } else {
+    console.warn("No <feBlend> element found in the SVG string.");
+  }
+
+  // Serialize the updated DOM object back to an SVG string
+  return serializer.serializeToString(svgDoc);
+}

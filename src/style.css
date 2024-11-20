@@ -22,7 +22,7 @@ p {
 #gradient-wrapper {
   aspect-ratio: 1.5;
   max-height: 200px;
-  margin-bottom: var(--spacing-12);
+  margin-bottom: var(--spacing-20);
   border-radius: var(--spacing-4);
 }
 
@@ -54,7 +54,7 @@ p {
 .full-length {
   display: flex;
   flex-direction: column;
-  margin-bottom: var(--spacing-12);
+  margin-bottom: var(--spacing-8);
 }
 
 .row {
@@ -64,4 +64,8 @@ p {
 
 .row button {
   flex-grow: 1;
+}
+
+.select-container {
+  margin-bottom: var(--spacing-20);
 }

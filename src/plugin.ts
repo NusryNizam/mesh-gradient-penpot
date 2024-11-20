@@ -1,6 +1,6 @@
 penpot.ui.open("Meshy - Generate mesh gradients", `?theme=${penpot.theme}`, {
   width: 350,
-  height: 400,
+  height: 470,
 });
 
 penpot.ui.onMessage<{
