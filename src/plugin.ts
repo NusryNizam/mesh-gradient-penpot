@@ -7,22 +7,16 @@ penpot.ui.onMessage<{
   type: string;
   data: any;
 }>((message) => {
-  console.log(message);
   if (message.type === "add-to-canvas") {
-    console.log("Adding to canvas");
-    console.log(message.data);
+    console.info("Adding to canvas");
+    const board = penpot.createBoard();
+    board.addFlexLayout();
+    board.verticalSizing = "auto";
+    board.horizontalSizing = "auto";
 
-    penpot.createShapeFromSvg(message.data);
+    const svgGroup = penpot.createShapeFromSvg(message.data);
 
-    // penpot
-    //   .uploadMediaData("abc", new Uint8Array(message.data), "image/svg+xml")
-    //   .then((imageData) => {
-    //     console.log("success");
-    //   })
-    //   .catch((e) => {
-    //     console.log("Error: ", e);
-    //   });
-    // TODO: Logic here
+    if (svgGroup) board.insertChild(0, svgGroup);
   }
 });
 

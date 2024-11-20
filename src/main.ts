@@ -1,60 +1,47 @@
-import { generateMeshGradient } from "meshgrad";
 import "./style.css";
-
-import * as htmlToImage from "html-to-image";
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
-import { elementToSVG, inlineResources } from "dom-to-svg-v2";
+import { generateRandomizedGradientSvg } from "./util";
 
 // get the current theme from the URL
 const searchParams = new URLSearchParams(window.location.search);
 document.body.dataset.theme = searchParams.get("theme") ?? "light";
 
 const box = document.getElementById("gradient-wrapper") as HTMLDivElement;
-const stopCount = document.getElementById("stop-count") as HTMLDivElement;
+const stopCountInput = document.getElementById("stop-count") as HTMLDivElement;
 const stopInput = document.getElementById("stops") as HTMLElement;
 
-stopCount.innerText = "3";
+stopCountInput.innerText = "3";
 stopInput.setAttribute("value", "3");
-let NO_OF_STOPS = 3;
-box.setAttribute("style", generateMeshGradient(NO_OF_STOPS));
+let stopCount = 3;
+
+let gradient = generate();
+box.innerHTML = gradient;
 
 stopInput.addEventListener("input", (e) => {
   const val = (e.target as HTMLInputElement).value;
-  NO_OF_STOPS = Number(val);
-  stopCount.innerText = val;
-  box.setAttribute("style", generateMeshGradient(NO_OF_STOPS));
+  stopCount = Number(val);
+  stopCountInput.innerText = val;
+
+  gradient = generate();
+  box.innerHTML = gradient;
 });
 
 document
   .querySelector("[data-handler='generate']")
   ?.addEventListener("click", () => {
-    // send message to plugin.ts
-
-    box.setAttribute("style", generateMeshGradient(NO_OF_STOPS));
+    gradient = generate();
+    box.innerHTML = gradient;
   });
 
 document
   .querySelector("[data-handler='add-to-canvas']")
-  ?.addEventListener("click", async () => {
-    // send message to plugin.ts
-
-    const svgDocument = elementToSVG(box);
-
-    // Inline external resources (fonts, images, etc) as data: URIs
-    await inlineResources(svgDocument.documentElement);
-
-    // Get SVG string
-    const svgString = new XMLSerializer().serializeToString(svgDocument);
-
-    if (svgString) {
-      return parent.postMessage(
-        {
-          type: "add-to-canvas",
-          message: svgString,
-        },
-        "*"
-      );
-    }
+  ?.addEventListener("click", () => {
+    parent.postMessage(
+      {
+        type: "add-to-canvas",
+        data: gradient,
+      },
+      "*"
+    );
   });
 
 // Listen plugin.ts messages
@@ -63,3 +50,13 @@ window.addEventListener("message", (event) => {
     document.body.dataset.theme = event.data.theme;
   }
 });
+
+function generate() {
+  return generateRandomizedGradientSvg(
+    stopCount,
+    Math.round(Math.random() * 360),
+    1200,
+    800,
+    "screen"
+  );
+}

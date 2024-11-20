@@ -26,6 +26,11 @@ p {
   border-radius: var(--spacing-4);
 }
 
+#gradient-wrapper > svg {
+  max-width: 300px;
+  height: 200px;
+}
+
 [data-theme="dark"] #gradient-wrapper {
   border: 1px solid var(--db-secondary);
 }

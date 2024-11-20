@@ -1,5 +1,5 @@
 {
-  "name": "mesh-gradient",
+  "name": "meshy",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -8,9 +8,7 @@
   },
   "dependencies": {
     "@penpot/plugin-styles": "1.0.0",
-    "@penpot/plugin-types": "1.0.0",
-    "dom-to-svg-v2": "^0.0.4",
-    "meshgrad": "^0.0.15"
+    "@penpot/plugin-types": "1.0.0"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
