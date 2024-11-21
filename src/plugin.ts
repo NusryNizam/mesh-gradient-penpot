@@ -1,6 +1,6 @@
 penpot.ui.open("Meshy - Generate mesh gradients", `?theme=${penpot.theme}`, {
   width: 350,
-  height: 470,
+  height: 540,
 });
 
 penpot.ui.onMessage<{
@@ -13,6 +13,8 @@ penpot.ui.onMessage<{
     board.addFlexLayout();
     board.verticalSizing = "auto";
     board.horizontalSizing = "auto";
+    board.x = penpot.viewport.center.x;
+    board.y = penpot.viewport.center.y;
 
     const svgGroup = penpot.createShapeFromSvg(message.data);
 

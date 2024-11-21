@@ -1,5 +1,9 @@
 import "./style.css";
-import { generateRandomizedGradientSvg, updateFeBlendMode } from "./util";
+import {
+  generateRandomizedGradientSvg,
+  updateCombinedFilter,
+  updateFeBlendMode,
+} from "./util";
 
 // get the current theme from the URL
 const searchParams = new URLSearchParams(window.location.search);
@@ -8,14 +12,24 @@ document.body.dataset.theme = searchParams.get("theme") ?? "light";
 const box = document.getElementById("gradient-wrapper") as HTMLDivElement;
 const stopCountInput = document.getElementById("stop-count") as HTMLDivElement;
 const stopInput = document.getElementById("stops") as HTMLElement;
+
+const blurStrengthInput = document.getElementById("blur") as HTMLElement;
+const blurStrengthInputDisplay = document.getElementById(
+  "blur-strength"
+) as HTMLElement;
+
 const blendModeInput = document.getElementById(
   "blend-modes"
 ) as HTMLSelectElement;
 
 stopCountInput.innerText = "3";
 stopInput.setAttribute("value", "3");
+blurStrengthInputDisplay.textContent = "0";
+blurStrengthInput.setAttribute("value", "0");
+
 let stopCount = 3;
 let blendMode = "normal";
+let blurIntensity = 0;
 
 let gradient = generate();
 box.innerHTML = gradient;
@@ -28,6 +42,14 @@ stopInput.addEventListener("input", (e) => {
   gradient = generate();
   box.innerHTML = gradient;
   console.log(gradient);
+});
+
+blurStrengthInput.addEventListener("input", (e) => {
+  const val = (e.target as HTMLInputElement).value;
+  blurIntensity = Number(val);
+  gradient = updateCombinedFilter(gradient, blurIntensity, blendMode);
+  blurStrengthInputDisplay.textContent = val;
+  box.innerHTML = gradient;
 });
 
 blendModeInput.addEventListener("change", (e) => {
@@ -68,6 +90,7 @@ function generate() {
     Math.round(Math.random() * 360),
     1200,
     800,
-    blendMode
+    blendMode,
+    blurIntensity
   );
 }

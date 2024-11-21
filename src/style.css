@@ -29,6 +29,7 @@ p {
 #gradient-wrapper > svg {
   max-width: 300px;
   height: 200px;
+  border-radius: var(--spacing-8);
 }
 
 [data-theme="dark"] #gradient-wrapper {
@@ -68,4 +69,13 @@ p {
 
 .select-container {
   margin-bottom: var(--spacing-20);
+}
+
+.color-input {
+  width: 100%;
+  padding: 2px 4px;
+}
+
+.color-label {
+  margin-bottom: var(--spacing-4);
 }
