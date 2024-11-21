@@ -1,6 +1,7 @@
 {
   "name": "Meshy",
+  "icon": "/icon.jpg",
   "code": "plugin.js",
   "description": "Generate mesh gradients",
-  "permissions": ["content:read", "content:write"]
+  "permissions": ["content:write"]
 }
